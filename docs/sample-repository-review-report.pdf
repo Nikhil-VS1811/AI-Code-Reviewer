@@ -1,0 +1,602 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 2927 >>
+stream
+0.07 0.10 0.18 rg
+0 684 612 108 re f
+0.15 0.39 0.92 rg
+50 697 72 4 re f
+1 1 1 rg
+BT
+/F2 22 Tf
+50 738 Td
+(Repository Security Report) Tj
+ET
+0.82 0.87 0.94 rg
+BT
+/F1 11 Tf
+50 714 Td
+(Repository Report | Health Score 25/100) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 14 Tf
+50 656 Td
+(Repository Overview) Tj
+ET
+0.15 0.39 0.92 rg
+50 650 86 2 re f
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 632 Td
+(Files Scanned: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 632 Td
+(4) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 617 Td
+(Issues Found: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 617 Td
+(9) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 602 Td
+(Critical: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 602 Td
+(6) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 587 Td
+(High: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 587 Td
+(3) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 572 Td
+(Medium: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 572 Td
+(0) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 557 Td
+(Low: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 557 Td
+(0) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F2 10 Tf
+50 542 Td
+(Health Score: ) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F1 10 Tf
+200 542 Td
+(25/100) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 14 Tf
+50 515 Td
+(Strengths) Tj
+ET
+0.15 0.39 0.92 rg
+50 509 86 2 re f
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 491 Td
+(? Source files were discovered and analyzed successfully) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 14 Tf
+50 464 Td
+(Weaknesses) Tj
+ET
+0.15 0.39 0.92 rg
+50 458 86 2 re f
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 440 Td
+(? Critical security findings detected) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 425 Td
+(? High severity security findings detected) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 410 Td
+(? Unsafe code execution patterns found) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 395 Td
+(? Dynamic execution usage increases security risk) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 14 Tf
+50 368 Td
+(Recommendations) Tj
+ET
+0.15 0.39 0.92 rg
+50 362 86 2 re f
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 344 Td
+(? Replace eval\(\) usage with safer parsing or explicit control flow) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 329 Td
+(? Remove exec\(\) where possible) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 314 Td
+(? Avoid shell command execution and validate command inputs) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 299 Td
+(? Add input validation around security-sensitive code paths) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 284 Td
+(? Prioritize fixes by severity before merging new changes) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 14 Tf
+50 257 Td
+(Findings) Tj
+ET
+0.15 0.39 0.92 rg
+50 251 86 2 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 233 Td
+(Comment #1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 218 Td
+(File: test.js) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 203 Td
+(Line: 1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 188 Td
+(Severity: HIGH) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 173 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 152 Td
+(document.write\(\) detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 129 512 1 re f
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 2254 >>
+stream
+0.07 0.10 0.18 rg
+BT
+/F2 12 Tf
+50 742 Td
+(Repository Security Report) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 724 Td
+(Comment #2) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 709 Td
+(File: test.js) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 694 Td
+(Line: 2) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 679 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 664 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 643 Td
+(new Function\(\) detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 620 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 602 Td
+(Comment #3) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 587 Td
+(File: test.cpp) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 572 Td
+(Line: 1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 557 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 542 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 521 Td
+(system\(\) call detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 498 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 480 Td
+(Comment #4) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 465 Td
+(File: test.cpp) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 450 Td
+(Line: 2) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 435 Td
+(Severity: HIGH) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 420 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 399 Td
+(strcpy\(\) may cause buffer overflows.) Tj
+ET
+0.82 0.86 0.92 rg
+50 376 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 358 Td
+(Comment #5) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 343 Td
+(File: test_multilang.py) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 328 Td
+(Line: 1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 313 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 298 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 277 Td
+(Use of eval\(\) detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 254 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 236 Td
+(Comment #6) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 221 Td
+(File: test_multilang.py) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 206 Td
+(Line: 2) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 191 Td
+(Severity: HIGH) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 176 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 155 Td
+(os.system\(\) command execution detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 132 512 1 re f
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 1371 >>
+stream
+0.07 0.10 0.18 rg
+BT
+/F2 12 Tf
+50 742 Td
+(Repository Security Report) Tj
+ET
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 724 Td
+(Comment #7) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 709 Td
+(File: test_multilang.py) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 694 Td
+(Line: 2) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 679 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 664 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 643 Td
+(system\(\) call detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 620 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 602 Td
+(Comment #8) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 587 Td
+(File: Test.java) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 572 Td
+(Line: 1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 557 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 542 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 521 Td
+(Use of exec\(\) detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 498 512 1 re f
+0.07 0.10 0.18 rg
+BT
+/F2 11 Tf
+50 480 Td
+(Comment #9) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 465 Td
+(File: Test.java) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 450 Td
+(Line: 1) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 435 Td
+(Severity: CRITICAL) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 420 Td
+(Category: security) Tj
+ET
+0.20 0.25 0.34 rg
+BT
+/F1 10 Tf
+50 399 Td
+(Runtime.exec\(\) detected.) Tj
+ET
+0.82 0.86 0.92 rg
+50 376 512 1 re f
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000133 00000 n 
+0000000372 00000 n 
+0000003351 00000 n 
+0000003590 00000 n 
+0000005896 00000 n 
+0000006135 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+7558
+%%EOF

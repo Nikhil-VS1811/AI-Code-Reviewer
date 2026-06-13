@@ -29,37 +29,37 @@ https://ai-code-reviewer-api-wgz8.onrender.com
 ### Landing Page
 
 Modern landing page showcasing the platform's core capabilities, including AI-powered code analysis, repository scanning, security insights, and review automation.
-![Landing Page](screenshots/landing-page.png)
+![Landing Page](Screenshots/landing-page.png)
 
 ### Authentication
 
 Secure login interface with JWT-based authentication, providing protected access to user dashboards and review management features.
-![Authentication](screenshots/login.png)
+![Authentication](Screenshots/login.png)
 
 ### Register
 
 User registration page enabling developers to create accounts and start tracking code quality, security findings, and repository reviews.
-![Authentication](screenshots/register.png)
+![Authentication](Screenshots/register.png)
 
 ### Dashboard
 
 Centralized analytics dashboard displaying review history, code quality metrics, issue statistics, and overall project health indicators.
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](Screenshots/dashboard.png)
 
 ### Repository Review
 
 GitHub repository analysis module that scans repositories for security vulnerabilities, risky coding patterns, and maintainability concerns.
-![Repository Review](screenshots/repository-review.png)
+![Repository Review](Screenshots/repository-review.png)
 
 ### Code Review Results
 
 Detailed review report presenting detected issues, severity levels, recommendations, and quality scores generated from automated analysis.
-![Code Review Results](screenshots/code-review.png)
+![Code Review Results](Screenshots/code-review.png)
 
 ### Review Page
 
 Comprehensive review management interface where users can browse, inspect, and track previously generated code review reports.
-![Code Review Results](screenshots/review-page.png)
+![Code Review Results](Screenshots/review-page.png)
 
 
 ---

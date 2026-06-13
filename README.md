@@ -6,6 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Render](https://img.shields.io/badge/Render-46E3B7)
 ![Vercel](https://img.shields.io/badge/Vercel-black?logo=vercel)
 

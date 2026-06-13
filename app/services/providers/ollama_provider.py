@@ -16,8 +16,8 @@ from app.services.ai_review_service import (
 logger = logging.getLogger(__name__)
 
 
-SupportedOllamaModel = Literal["qwen3:4b", "llama3.1:8b", "qwen2.5-coder:7b"]
-SUPPORTED_OLLAMA_MODELS = {"qwen3:4b", "llama3.1:8b", "qwen2.5-coder:7b"}
+SupportedOllamaModel = Literal["qwen3:4b", "llama3.1:8b", "qwen2.5-coder:7b","gemma4:12b"]
+SUPPORTED_OLLAMA_MODELS = {"qwen3:4b", "llama3.1:8b", "qwen2.5-coder:7b","gemma4:12b"}
 
 
 class OllamaReviewProvider(AIReviewProvider):
@@ -69,6 +69,8 @@ class OllamaReviewProvider(AIReviewProvider):
         last_error: Exception | None = None
         for attempt in range(self.max_retries + 1):
             try:
+                print("OLLAMA URL:", f"{self.base_url}/api/generate")
+                print("OLLAMA MODEL:", self.model)
                 with request.urlopen(
                     ollama_request,
                     timeout=self.timeout_seconds,
@@ -95,13 +97,44 @@ class OllamaReviewProvider(AIReviewProvider):
         return f"""
 {prompt}
 
-Important Ollama JSON requirements:
-- Return exactly one JSON object.
-- All score fields must be integers from 0 to 100.
-- Do not return -1 or any negative number.
-- If a score is uncertain, choose a reasonable value between 0 and 100.
-- Include all required fields: overall_score, security_score, performance_score,
-  maintainability_score, readability_score, summary, comments.
+CRITICAL INSTRUCTIONS:
+
+Return ONLY valid JSON.
+
+DO NOT return:
+- Markdown
+- Explanations
+- Text before JSON
+- Text after JSON
+- Code fences
+
+Return EXACTLY this schema:
+
+{{
+  "overall_score": 80,
+  "security_score": 80,
+  "performance_score": 80,
+  "maintainability_score": 80,
+  "readability_score": 80,
+  "summary": "summary here",
+  "comments": [
+    {{
+      "line_number": 1,
+      "severity": "high",
+      "category": "security",
+      "comment": "issue description"
+    }}
+  ]
+}}
+
+Rules:
+- Scores must be integers between 0 and 100.
+- comments must always be an array.
+- Return only JSON.
+- Output must start with {{
+- Output must end with }}
+
+JSON ONLY.
 """.strip()
 
     def _extract_ollama_response(self, raw_response: dict) -> str:
@@ -114,6 +147,7 @@ Important Ollama JSON requirements:
 
     def _parse_review_response(self, response_text: str) -> AIReviewResult:
         try:
+            logger.warning("OLLAMA RAW REVIEW RESPONSE:\n%s",response_text)
             response_data = json.loads(response_text)
         except json.JSONDecodeError as exc:
             logger.exception("Ollama review output was malformed JSON.")

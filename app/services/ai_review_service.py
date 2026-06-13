@@ -184,7 +184,11 @@ def get_ai_review_provider() -> AIReviewProvider:
     if provider_name == "ollama":
         from app.services.providers.ollama_provider import OllamaReviewProvider
 
-        return OllamaReviewProvider(model=settings.OLLAMA_MODEL)
+        return OllamaReviewProvider(
+            model=settings.OLLAMA_MODEL,
+            base_url=settings.OLLAMA_BASE_URL,
+            timeout_seconds=settings.OLLAMA_TIMEOUT_SECONDS,
+        )
 
     if provider_name == "mock":
         return MockAIReviewProvider()

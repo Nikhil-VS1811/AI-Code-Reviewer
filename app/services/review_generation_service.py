@@ -1,14 +1,19 @@
 import logging
-
+from app.services.security.static_scanner import scan_code
 from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, selectinload
 
+from app.services.ai_review_service import (
+    AIReviewService,
+    AIReviewComment,
+    get_ai_review_service,
+)
+
 from app.models.review import Review, ReviewComment
 from app.models.submission import Submission
 from app.models.user import User
-from app.services.ai_review_service import AIReviewService, get_ai_review_service
 
 
 logger = logging.getLogger(__name__)
@@ -29,7 +34,35 @@ def generate_review_for_submission(
 
     try:
         review_service = ai_review_service or get_ai_review_service()
+        static_findings = scan_code(submission.code)
         ai_review = review_service.review_code(submission=submission)
+        for finding in static_findings:
+            ai_review.comments.append(AIReviewComment(line_number=finding["line_number"],severity=finding["severity"],category=finding["category"],comment=finding["comment"],))
+
+        critical_count = sum(
+        1
+        for finding in static_findings
+        if finding["severity"] == "critical"
+        )
+
+        high_count = sum(
+        1
+        for finding in static_findings
+        if finding["severity"] == "high"
+        )
+
+        penalty = critical_count * 20 + high_count * 10
+
+        ai_review.security_score = max(
+        0,
+        ai_review.security_score - penalty,
+        )
+
+        ai_review.overall_score = max(
+        0,
+        ai_review.overall_score - penalty // 2,
+        )
+
     except ValueError as exc:
         logger.warning("AI review provider returned an invalid response: %s", exc)
         raise HTTPException(

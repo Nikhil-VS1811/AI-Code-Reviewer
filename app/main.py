@@ -43,14 +43,16 @@ def create_app() -> FastAPI:
     
 
     app.add_middleware(RequestContextMiddleware)
-    if settings.cors_origins:
-        app.add_middleware(
-            CORSMiddleware,
-            allow_origins=settings.cors_origins,
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
+    app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://ai-code-reviewer-seven-brown.vercel.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    )
 
     app.include_router(auth.router, prefix="/auth", tags=["Auth"])
     app.include_router(submissions.router, prefix="/submissions", tags=["Submissions"])

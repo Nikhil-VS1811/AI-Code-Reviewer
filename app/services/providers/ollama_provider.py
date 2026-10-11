@@ -69,14 +69,15 @@ class OllamaReviewProvider(AIReviewProvider):
         last_error: Exception | None = None
         for attempt in range(self.max_retries + 1):
             try:
-                print("OLLAMA URL:", f"{self.base_url}/api/generate")
-                print("OLLAMA MODEL:", self.model)
                 with request.urlopen(
                     ollama_request,
                     timeout=self.timeout_seconds,
                 ) as response:
                     response_body = response.read().decode("utf-8")
-                    logger.debug("Ollama raw HTTP response: %s", response_body)
+                    logger.debug(
+                        "Received Ollama HTTP response (%d chars).",
+                        len(response_body),
+                    )
                     return json.loads(response_body)
             except TimeoutError as exc:
                 logger.warning("Ollama request timed out on attempt %s.", attempt + 1)
@@ -142,12 +143,14 @@ JSON ONLY.
         if not isinstance(response_text, str) or not response_text.strip():
             raise ValueError("Ollama response did not include review JSON.")
 
-        logger.debug("Ollama generated review JSON text: %s", response_text)
+        logger.debug(
+            "Extracted Ollama review JSON payload (%d chars).",
+            len(response_text),
+        )
         return response_text.strip()
 
     def _parse_review_response(self, response_text: str) -> AIReviewResult:
         try:
-            logger.warning("OLLAMA RAW REVIEW RESPONSE:\n%s",response_text)
             response_data = json.loads(response_text)
         except json.JSONDecodeError as exc:
             logger.exception("Ollama review output was malformed JSON.")

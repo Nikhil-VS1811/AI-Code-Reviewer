@@ -124,7 +124,7 @@ Code:
 """.strip()
 
     def parse_response(self, raw_response: str) -> AIReviewResult:
-        logger.debug("AI provider raw response: %s", raw_response)
+        logger.debug("Received AI provider response (%d chars).", len(raw_response))
         try:
             response_data = json.loads(raw_response)
         except json.JSONDecodeError as exc:

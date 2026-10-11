@@ -34,24 +34,38 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
         return response
 
 
+def get_allowed_cors_origins() -> list[str]:
+    base_origins = [
+        "http://localhost:5173",
+        "https://ai-code-reviewer-seven-brown.vercel.app",
+    ]
+    configured_origins = [
+        origin for origin in settings.cors_origins
+        if origin and origin != "*"
+    ]
+    seen = set()
+    allowed: list[str] = []
+    for origin in base_origins + configured_origins:
+        if origin not in seen:
+            seen.add(origin)
+            allowed.append(origin)
+    return allowed
+
+
 def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.APP_NAME,
         debug=settings.DEBUG,
         version="0.1.0",
     )
-    
 
     app.add_middleware(RequestContextMiddleware)
     app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://ai-code-reviewer-seven-brown.vercel.app",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+        CORSMiddleware,
+        allow_origins=get_allowed_cors_origins(),
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     app.include_router(auth.router, prefix="/auth", tags=["Auth"])

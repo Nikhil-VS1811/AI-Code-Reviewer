@@ -1,9 +1,12 @@
+import time
 from app.services.github_service import (
     clone_repository,
     cleanup_repository,
 )
 from app.services.repository_scanner import (
     collect_source_files,
+    MAX_FILE_SIZE_BYTES,
+    DEFAULT_SCAN_DEADLINE_SECONDS,
 )
 from app.services.security.static_scanner import (
     scan_code,
@@ -94,9 +97,16 @@ def analyze_repository(repo_url: str):
         files = collect_source_files(repo_path)
 
         findings = []
+        scan_deadline = time.monotonic() + DEFAULT_SCAN_DEADLINE_SECONDS
 
         for file in files:
+            if time.monotonic() > scan_deadline:
+                break
+
             try:
+                if file.stat().st_size > MAX_FILE_SIZE_BYTES:
+                    continue
+
                 content = file.read_text(
                     encoding="utf-8",
                     errors="ignore",

@@ -23,11 +23,18 @@ def create_submission(
     return submission
 
 
-def list_user_submissions(db: Session, current_user: User) -> list[Submission]:
+def list_user_submissions(
+    db: Session,
+    current_user: User,
+    limit: int = 20,
+    offset: int = 0,
+) -> list[Submission]:
     statement = (
         select(Submission)
         .where(Submission.user_id == current_user.id)
         .order_by(Submission.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     return list(db.scalars(statement).all())
 

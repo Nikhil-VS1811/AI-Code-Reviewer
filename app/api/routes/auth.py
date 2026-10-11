@@ -31,7 +31,7 @@ def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Annotated[Session, Depends(get_db)],
 ) -> Token:
-    user = authenticate_user(db=db, email=form_data.username, password=form_data.password)
+    user = authenticate_user(db=db, email=form_data.username.strip().lower(), password=form_data.password)
     access_token = create_access_token(subject=user.email)
     return Token(access_token=access_token)
 

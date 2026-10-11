@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
@@ -31,8 +31,15 @@ def submit_code(
 def read_submissions(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
+    limit: Annotated[int, Query(ge=1, le=100, description="Maximum number of submissions to return")] = 20,
+    offset: Annotated[int, Query(ge=0, description="Offset for pagination")] = 0,
 ) -> list[SubmissionResponse]:
-    return list_user_submissions(db=db, current_user=current_user)
+    return list_user_submissions(
+        db=db,
+        current_user=current_user,
+        limit=limit,
+        offset=offset,
+    )
 
 
 @router.get("/{submission_id}", response_model=SubmissionResponse)

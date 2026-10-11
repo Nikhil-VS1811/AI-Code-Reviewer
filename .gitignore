@@ -32,3 +32,18 @@ frontend/dist/
 # Docker
 *.log
 security-test-repo/
+
+# Local agent & Reticle verification tooling
+.claude/
+.reticle/
+.reticle.json
+AGENTS.md
+CLAUDE.md
+RETICLE.md
+frontend/.claude/
+frontend/.reticle/
+frontend/.reticle.json
+frontend/AGENTS.md
+frontend/CLAUDE.md
+frontend/RETICLE.md
+frontend/src/reticle-dev.ts

@@ -7,13 +7,20 @@ from app.models.submission import Submission
 from app.models.user import User
 
 
-def list_user_reviews(db: Session, current_user: User) -> list[Review]:
+def list_user_reviews(
+    db: Session,
+    current_user: User,
+    limit: int = 20,
+    offset: int = 0,
+) -> list[Review]:
     statement = (
         select(Review)
         .join(Submission)
         .options(selectinload(Review.comments))
         .where(Submission.user_id == current_user.id)
         .order_by(Review.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     return list(db.scalars(statement).all())
 

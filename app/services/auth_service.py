@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -26,13 +26,21 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return password_context.verify(plain_password, hashed_password)
 
 
+def normalize_email(email: str) -> str:
+    if not email:
+        return ""
+    return email.strip().lower()
+
+
 def get_user_by_email(db: Session, email: str) -> User | None:
-    statement = select(User).where(User.email == email)
+    normalized = normalize_email(email)
+    statement = select(User).where(func.lower(User.email) == normalized)
     return db.scalar(statement)
 
 
 def create_user(db: Session, payload: UserCreate) -> User:
-    existing_user = get_user_by_email(db, payload.email)
+    normalized_email = normalize_email(payload.email)
+    existing_user = get_user_by_email(db, normalized_email)
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -40,8 +48,8 @@ def create_user(db: Session, payload: UserCreate) -> User:
         )
 
     user = User(
-        username=payload.username,
-        email=payload.email,
+        username=payload.username.strip(),
+        email=normalized_email,
         hashed_password=hash_password(payload.password),
     )
     db.add(user)
@@ -51,7 +59,8 @@ def create_user(db: Session, payload: UserCreate) -> User:
 
 
 def authenticate_user(db: Session, email: str, password: str) -> User:
-    user = get_user_by_email(db, email)
+    normalized_email = normalize_email(email)
+    user = get_user_by_email(db, normalized_email)
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

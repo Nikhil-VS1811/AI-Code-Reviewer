@@ -26,6 +26,9 @@ export function LandingPage() {
             <button type="button" onClick={toggleTheme} className="secondary-button">
               {theme === "dark" ? "Light" : "Dark"}
             </button>
+            <Link to="/demo" className="secondary-button">
+              Try Demo
+            </Link>
             <Link to="/login" className="secondary-button">
               Login
             </Link>
@@ -50,13 +53,16 @@ export function LandingPage() {
               Submit code, generate structured reviews, and track quality across security,
               performance, maintainability, and readability from one focused console.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link to="/signup" className="primary-button justify-center">
-                Start reviewing
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link to="/demo" className="primary-button justify-center bg-brand-600 hover:bg-brand-500 shadow-sm">
+                Get Started as Guest
                 <ArrowRight size={18} />
               </Link>
+              <Link to="/signup" className="secondary-button justify-center">
+                Create Account
+              </Link>
               <Link to="/login" className="secondary-button justify-center">
-                Open dashboard
+                Sign In
               </Link>
             </div>
           </div>

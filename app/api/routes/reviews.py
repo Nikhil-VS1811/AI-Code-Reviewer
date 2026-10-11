@@ -1,8 +1,9 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy.orm import Session
 
+from app.core.rate_limit import review_generation_rate_limiter
 from app.db.database import get_db
 from app.models.user import User
 from app.schemas.review import ReviewResponse
@@ -20,6 +21,7 @@ def generate_review(
     submission_id: int,
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
+    _rate_limit: Annotated[None, Depends(review_generation_rate_limiter)],
 ) -> ReviewResponse:
     return generate_review_for_submission(
         db=db,
@@ -32,8 +34,15 @@ def generate_review(
 def read_reviews(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
+    limit: Annotated[int, Query(ge=1, le=100)] = 20,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ) -> list[ReviewResponse]:
-    return list_user_reviews(db=db, current_user=current_user)
+    return list_user_reviews(
+        db=db,
+        current_user=current_user,
+        limit=limit,
+        offset=offset,
+    )
 
 
 @router.get("/{review_id}", response_model=ReviewResponse)

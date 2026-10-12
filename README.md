@@ -145,68 +145,9 @@ The system follows a layered architecture separating HTTP routing, rate limiting
 - **Service & Analysis Layer (`app/services/`):** Encapsulates user authentication, submission CRUD, hybrid review orchestration, pluggable AI providers, shallow Git cloning, static scanning, and PDF generation.
 - **Persistence Layer (`app/db/`, `app/models/`, `migrations/`):** SQLAlchemy 2.0 session management (`pool_pre_ping=True`) and Alembic migrations targeting PostgreSQL.
 
-```mermaid
-flowchart TD
-    subgraph Client["Frontend SPA (React 18 + TypeScript + Vite on Vercel)"]
-        LP["Landing Page (/)"]
-        GD["Guest Demo (/demo - Local Sample Data Only)"]
-        AUTH_UI["Login & Signup (/login, /signup)"]
-        DASH_UI["Protected App (/dashboard, /submit, /reviews, /repository-review)"]
-    end
+![AI Code Review System Architecture](docs/architecture.png)
 
-    subgraph API["FastAPI Backend (Render Docker Runtime)"]
-        MW["Middleware (RequestContextMiddleware + CORSMiddleware)"]
-        RL["Per-User RateLimiter (In-Memory Sliding Window)"]
-        AUTH_R["Auth Router (/auth)"]
-        SUB_R["Submissions Router (/submissions)"]
-        REV_R["Reviews Router (/reviews)"]
-        REPO_R["Repository Review Router (/repository-review)"]
-        HLTH_R["Health Router (/api/v1/health, /api/v1/ready)"]
-    end
-
-    subgraph Services["Domain & Analysis Services"]
-        AUTH_S["auth_service (JWT HS256 + bcrypt + lower(email))"]
-        REV_GEN["review_generation_service (Orchestrator + Penalty Logic)"]
-        AI_S["ai_review_service (MockAIReviewProvider / OllamaReviewProvider)"]
-        SCAN_S["static_scanner (mask_inert_code + 14 Regex Rules)"]
-        REPO_S["repository_review_service + repository_scanner"]
-        GIT_S["github_service (Validated HTTPS Shallow Clone + Cleanup)"]
-        PDF_S["pdf_report_service & repository_pdf_service"]
-    end
-
-    subgraph External["Persistence & External Dependencies"]
-        PG[("PostgreSQL (users, submissions, reviews, review_comments)")]
-        GH["Public GitHub Repos (https://github.com/owner/repo)"]
-        OLLAMA["Local Ollama API (Optional: POST /api/generate)"]
-    end
-
-    LP --> GD
-    LP --> AUTH_UI
-    AUTH_UI --> MW
-    DASH_UI --> MW
-    MW --> AUTH_R
-    MW --> SUB_R
-    MW --> REV_R
-    MW --> REPO_R
-    MW --> HLTH_R
-    REV_R --> RL
-    REPO_R --> RL
-    AUTH_R --> AUTH_S
-    AUTH_S --> PG
-    HLTH_R --> PG
-    SUB_R --> PG
-    REV_R --> REV_GEN
-    REV_R --> PDF_S
-    REV_GEN --> SCAN_S
-    REV_GEN --> AI_S
-    REV_GEN --> PG
-    AI_S -. "When AI_PROVIDER=ollama" .-> OLLAMA
-    REPO_R --> REPO_S
-    REPO_R --> PDF_S
-    REPO_S --> GIT_S
-    REPO_S --> SCAN_S
-    GIT_S --> GH
-```
+*Layered system architecture distinguishing the client-only Guest Demo (`/demo`) from the JWT-authenticated FastAPI routers, hybrid static/AI review services, hardened GitHub shallow clone pipeline, optional local Ollama inference, and PostgreSQL persistence.*
 
 ---
 
@@ -491,41 +432,26 @@ npm run dev
 
 ## 13. Environment Variables
 
-All backend settings are validated at startup by [`Settings`](app/core/config.py) using [`.env.example`](.env.example) as the template:
+Backend settings are loaded from `.env` and validated at startup by [`app/core/config.py`](app/core/config.py). Refer to [`.env.example`](.env.example) for the sanitized template:
 
-```env
-APP_NAME="AI Code Review System"
-APP_ENV=development
-DEBUG=true
-
-DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/ai_code_review
-
-SECRET_KEY=replace-this-with-a-long-random-secret
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-AI_PROVIDER=mock
-OLLAMA_MODEL=qwen3:4b
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_TIMEOUT_SECONDS=60
-# OLLAMA_MODEL=qwen2.5-coder:7b
-
-CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000
-```
+1. Copy [`.env.example`](.env.example) to `.env`.
+2. Set `DATABASE_URL` to your PostgreSQL connection string.
+3. Set `SECRET_KEY` to a securely generated random value of at least 32 characters.
+4. Configure `AI_PROVIDER=ollama` only when using a configured Ollama instance; otherwise retain the supported `mock` default.
 
 | Variable | Layer | Required | Default | Validation & Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| `APP_NAME` | Backend | No | `"AI Code Review System"` | FastAPI title in OpenAPI docs |
-| `APP_ENV` | Backend | No | `"development"` | When set to `"production"`, rejects the default placeholder `SECRET_KEY` |
+| `APP_NAME` | Backend | No | `"AI Code Review System"` | FastAPI application title in OpenAPI docs |
+| `APP_ENV` | Backend | No | `"development"` | Environment mode; when set to `"production"`, rejects the placeholder `SECRET_KEY` |
 | `DEBUG` | Backend | No | `False` | FastAPI debug mode flag |
-| `DATABASE_URL` | Backend | **Yes** | — | SQLAlchemy connection string (e.g., `postgresql+psycopg://user:pass@host:5432/dbname`) |
-| `SECRET_KEY` | Backend | **Yes** | `"change-this-secret-key-in-production"` | JWT signing key; any custom value must be **at least 32 characters** (`validate_secret_key`) |
+| `DATABASE_URL` | Backend | **Yes** | — | PostgreSQL connection string (`postgresql+psycopg://user:password@host:5432/dbname`) |
+| `SECRET_KEY` | Backend | **Yes** | `"change-this-secret-key-in-production"` | JWT signing key; any custom value must be at least 32 characters (`validate_secret_key`) |
 | `ALGORITHM` | Backend | No | `"HS256"` | JWT signature algorithm |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Backend | No | `30` | JWT expiration window in minutes |
-| `AI_PROVIDER` | Backend | No | `"mock"` | Must be `"mock"` or `"ollama"` (case-insensitive) |
-| `OLLAMA_MODEL` | Backend | No | `"qwen3:4b"` | Allowed values: `qwen3:4b`, `qwen2.5-coder:7b`, `llama3.1:8b`, `gemma4:12b` |
-| `OLLAMA_BASE_URL` | Backend | No | `"http://localhost:11434"` | Base URL for Ollama HTTP requests when `AI_PROVIDER=ollama` |
-| `OLLAMA_TIMEOUT_SECONDS` | Backend | No | `60` | Per-attempt HTTP timeout in seconds for Ollama calls |
+| `AI_PROVIDER` | Backend | No | `"mock"` | Active review provider: `"mock"` or `"ollama"` (case-insensitive) |
+| `OLLAMA_MODEL` | Backend | No | `"qwen3:4b"` | Allowed models: `qwen3:4b`, `qwen2.5-coder:7b`, `llama3.1:8b`, `gemma4:12b` |
+| `OLLAMA_BASE_URL` | Backend | No | `"http://localhost:11434"` | Base URL for local Ollama HTTP requests when `AI_PROVIDER=ollama` |
+| `OLLAMA_TIMEOUT_SECONDS` | Backend | No | `60` | Per-attempt HTTP timeout in seconds for Ollama requests |
 | `CORS_ORIGINS` | Backend | No | `""` | Comma-separated list of additional allowed origins (wildcard `*` is ignored) |
 | `VITE_API_BASE_URL` | Frontend | No | `"http://localhost:8000"` | Backend API base URL compiled into the Vite frontend bundle |
 
